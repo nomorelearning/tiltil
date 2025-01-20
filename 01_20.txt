@@ -137,3 +137,5 @@
     5. enumerate
     6. 함수와 scope
     7. global 키워드드
+
+1
