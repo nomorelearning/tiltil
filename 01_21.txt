@@ -1,0 +1,86 @@
+## Data types / Control of flow / Functions
+목차
+[1. python
+ 2. data types
+ 3. operator
+ 4. control of flow
+ 5. Functions
+ 6. 참고]
+
+1. python
+    - 데이터 분석 활용: 풍부한 라이브러리(데이터 분석에 최적화된; pandas, numpy, matplotlib), 데이터 처리 및 시각화(대용향 데이터 처리와 시각화 쉽게), 머신러닝 및 인공지능 라이브러리(scikit-learn, tensorflow, keras)
+
+2. data types
+    1. data
+        - 메서드: 객체에 속한 함수, 객체의 상태를 조작하거나 동작을 수행; 클래스 내부에 정의; 타입을 표현하는 방법
+    2. Numeric
+    3. Sequence
+        - str: f-String은 문자열에 f 또는 F 접두어를 붙이고{표현식}하여 문자열에 삽입
+            * str 메서드: replace(바꿀 대상, 새로운 글자), strip([chars]; 공백이나 특정 문자를 제거), split(공백이나 특정 문자를 기분으로 분리), 'separator'.join(iterable)(구분자로 iterable의 문자열을 연결한 문자열을 반환)
+        ★ [list]: 여러 개의 값을 순서대로 저장하는/ '변경 가능한' 시퀀스 자료형(어떠한 데이터 타입도 저장 가능), 리스트 원소 변경은 재할당 아님(리스트 주소가 그대로)
+            * list 메서드: append, extend(iterable m 의 모든 항복들을 리스트 끝에 추가), pop(가장 오른쪽 항목을 반환 후 제거)
+                           reverse(역순으로), sort(정렬)
+        - tuple: 불변, 0개 이상의 객체, 소괄호, 어떤 자료형도 저장 ; 단일 요소 튜플을 만들 때는 반드시 Trailing comma 사용해야 함(안하면 int로 취급되어 소괄호 벗겨짐)
+            * 튜플의 사용례: 다중 할당, 값 교환, 그룹화(student = ('kim', 20,'cs'), 언패킹(name, age, major = student)), 함수 다중 반환 '내부동작'
+        - range: 연속된 '정수' 시퀀스를 '생성'하는 / '불변' 자료형
+            * 기본 구문: range(시작 값, 끝 값, 증가 값) ; 슬라이싱과 유사하다고 생각..
+            * 값의 규칙: 음수(양수) 증가 시(시작값이 끝값보다 커야(작아야))
+
+
+    4. Non-Sequence
+        ★ dict: {key : value}쌍으로 이루어진 '순서없는' 'key 중복없는' *변경가능*한 자료형, 'key를 통해 value로 접근'
+            * 특징: 빈 dict 가능{}, key는 변경 불가능한 자료형만 사용 가능(str, int, float, range..), value는 모든 자료형 가능능
+            * 딕셔너리 메서드: get(k), get(k,v), keys, values, items, pop(k), pop(k,v)
+        - set: '순서 중복 없는' *변경 가능*한 자료형, 수학에서의 "집합"과 동일한 연산 처리 기능, 중괄호
+            * 빈 세트는 set()로 만들어야 함, 중복값 들어가면 없어짐; 합(|) 교(&) 차(-)
+            * 세트 메서드: add(x), remove(x)
+
+    5. other: None(값이 없음을 표형하는 자료형), Boolean(참 거짓 표현, 조건문 배울 때 등장할 예정)
+    6. collection: 여러 개의 항목 또는 요소를 담는자료구조(str, list, tuple, dict, set)
+    7. 복사
+        - 복사 유형: 할당(=), 얕은 복사(슬라이싱; 함께 변경됨), 깊은 복사(import copy; copy.deepcopy(list))
+    8. type conversion
+        * 암시적 형변환: True = 1, False =0; Boolean과 Numeric 간 연산이 가능
+        * 명시적 형변환: 가능한 경우 불가능한 경우 구분분
+
+3. operator
+    1. 기본 연산자
+      - 비교 연산자: ==(값이 같은지, 동등성) vs. is(객체 자체가 같은지(동일한 메모리 주소인지) 비교, 식별성)
+          * is를 이때 쓰세요: 같은 주소에 있는가? None을 비교(is None; None은 주소가 하나임) for 싱글턴 객체(오직 1개만 존재: None, True, False)
+      - 논리 연산자: and(둘 다 True 가 True) or(하나라도 True 가 True) not(반대로)
+          * 빈 ''는 false, 채워져 있으면 True ; 마지막 객체를 기준으로 비교 ; and는 앞이 False면 뒤에 안봄 ; or는 앞이 True면 뒤에 안봄봄
+    2. 단축평가: 뭐지?
+    3. 멤버십 연산자: 특정값이 시퀀스나 다른 컬렉션에 포함 여부를 확인(in, not in)
+    4. 시퀀스형 연산자: 결합 연산자(+), 반복 연산자(*)
+        * print([1,2] + [3,4])    # [1,2,3,4]
+  
+4. control of flow
+    1. 제어문: 코드의 실행 흐름을 제어
+        - 조건문: if, elif, else
+        - 반복문: for while
+    2. 조건문
+
+    3. 반복문
+        - 반복문 제어: break, continue, pass
+        - iterable: 반복문에서 순회할 수 있는 객체(시퀀스 + dict, set)
+        - while: 참인 동안 코드 반복 실행
+        - 반복 제어 키워드: break(반복 즉시 중지), continue(다음 반복으로), pass(아무런 동작도 수행하지 않고 넘어감)
+    4. list comprehension: 간결하고 효율적인 리스트 생성 방법; list(expression for 변수 in iterable if 조건식)
+
+5. Functions
+    1. 함수: 함수 구조(return은 결과값), 일급 객체(함수가 변수에 할당, 함수가 다른 함수의 인자로 전달될 수 있음, 함수가 다른 함수에 의해 반환될 수 있음), 익명함수(람다 표현식)
+    2. 매개변수와 인자: 매개 변수(함수를 정의할 때 함수가 받을 값을 나타내는 변수), 인자(함수를 호출할 때, 실제로 전달되는 값값)
+        * 다양한 인자 종류: 위치 인자, 기본 인자값, 키워드 인자, 
+    3. packing & unpacking
+    4. 내장 함수
+    5. 람다 표현식
+
+6. 참고
+    1. style guide
+      - 줄 바꿈을 이용한 표현에서 마지막 원소 뒤에 Trailing Comma
+    2. python tutor
+    3. collection
+    4. 불변과 가변
+    5. enumerate
+    6. 함수와 scope
+    7. global 키워

@@ -45,7 +45,7 @@
         - 진수 표현: 2진수(binary; 0b), 8진수(octal; 0o), 16진수(hexadecimal; 0x) ; 진수의 표현법만 알아간다는 느낌으로 정립립
     2. float: 실수 자료형; 프로그래밍 언어에서 float는 실수에 대한 근삿값
         - 유한 정밀도: 모든 소수는 근삿값으로 치환(용량이 제한되어 있기 때문)
-        - 실수 연산시 주의사항: 컴퓨터는 2진 사람은 10진 -> float point rounding error(부동소수점 에러) -> 해결핵: decimal 모듈 사용해 정확성 보장
+        - 실수 연산시 주의사항: 컴퓨터는 2진 사람은 10진 -> float point rounding error(부동소수점 에러) -> 해결핵: 'decimal' 모듈 사용해 정확성 보장
 
 5. Sequence Types: 여러 개의 값들을 순서대로 나열하여 저장하는 자료형; str, list, tuple, range
     - 순서(Sequence; 값들이 순서대로 저장), 인덱싱(Indexing; 각 값에 고유한 인덱스 있음, 특정 위치 값 선택하거나 수정 가능), 슬라이싱(인덱스 범위를 조절해 부분적 값 추출 가능), 길이(len()함수), 반복
@@ -66,77 +66,6 @@
         * https://peps.python.org/pep-0008/
     - 주석: # 주석; 여러줄은 드래그 후 ctrl + /(취소도 동일)
 
-------------------------
-
-## Data types / Control of flow / Functions
-목차
-[1. python
- 2. data types
- 3. operator
- 4. control of flow
- 5. Functions
- 6. 참고]
-
-1. python
-    - 데이터 분석 활용: 풍부한 라이브러리(데이터 분석에 최적화된; pandas, numpy, matplotlib), 데이터 처리 및 시각화(대용향 데이터 처리와 시각화 쉽게), 머신러닝 및 인공지능 라이브러리(scikit-learn, tensorflow, keras)
-
-2. data types
-    1. data
-        - 메서드: 객체에 속한 함수, 객체의 상태를 조작하거나 동작을 수행; 클래스 내부에 정의; 타입을 표현하는 방법
-    2. Numeric
-    3. Sequence
-        - str: f-String은 문자열에 f 또는 F 접두어를 붙이고{표현식}하여 문자열에 삽입
-            * str 메서드: replace(바꿀 대상, 새로운 글자), strip([chars]; 공백이나 특정 문자를 제거), split(공백이나 특정 문자를 기분으로 분리), 'separator'.join(iterable)(구분자로 iterable의 문자열을 연결한 문자열을 반환)
-        - list
-            * list 메서드: append, extend(iterable m 의 모든 항복들을 리스트 끝에 추가), pop(가장 오른쪽 항목을 반환 후 제거)
-                           reverse(역순으로), sort(정렬렬)
-        - tuple: 불변, 0개 이상의 객체, 소괄호, 어떤 자료형도 저장
-        - range: 연속된 정수 시퀀스를 생성하는 불변 자료형
-    4. Non-Sequence
-        - dict: key - value쌍으로 이루어진 순서와 중복 없는 변경 가능한 자료형, 중괄호
-            * 딕셔너리 메서드: get(k), get(k,v), keys, values, items, pop(k), pop(k,v)
-        - set: 순서 중복 없는 변경 가능한 자료형, 수학에서의 집합과 동일한 연산 처리 기능, 중괄호
-            * 세트 메서드: add(x), remove(x)           
-    5. other: None, Boolean(참 거짓 표현, )
-    6. 복사
-        - 복사 유형: 할당(=), 얕은 복사(슬라이싱; 함께 변경됨), 깊은 복사(import copy; copy.deepcopy(list))
-    7. type conversion: 암시적 형변환, 명시적 형변환
-
-3. operator
-    1. 기본 연산자
-    2. 단축평가: 뭐지?
-    3. 멤버십 연산자: 특정값이 시퀀스나 다른 컬렉션에 속하는지 여부를 확인(in, not in)
-    4. 시퀀스형 연산자: 결합 연산자(+), 반복 연산자(*)
-
-4. control of flow
-    1. 제어문: 코드의 실행 흐름을 제어
-        - 조건문: if, elif, else
-        - 반복문: for while
-    2. 조건문
-
-    3. 반복문
-        - 반복문 제어: break, continue, pass
-        - iterable: 반복문에서 순회할 수 있는 객체(시퀀스 + dict, set)
-        - while: 참인 동안 코드 반복 실행
-        - 반복 제어 키워드: break(반복 즉시 중지), continue(다음 반복으로), pass(아무런 동작도 수행하지 않고 넘어감)
-    4. list comprehension: 간결하고 효율적인 리스트 생성 방법; list(expression for 변수 in iterable if 조건식)
-
-5. Functions
-    1. 함수: 함수 구조(return은 결과값), 일급 객체(함수가 변수에 할당, 함수가 다른 함수의 인자로 전달될 수 있음, 함수가 다른 함수에 의해 반환될 수 있음), 익명함수(람다 표현식)
-    2. 매개변수와 인자: 매개 변수(함수를 정의할 때 함수가 받을 값을 나타내는 변수), 인자(함수를 호출할 때, 실제로 전달되는 값값)
-        * 다양한 인자 종류: 위치 인자, 기본 인자값, 키워드 인자, 
-    3. packing & unpacking
-    4. 내장 함수
-    5. 람다 표현식
-
-6. 참고
-    1. style guide
-    2. python tutor
-    3. collection
-    4. 불변과 가변
-    5. enumerate
-    6. 함수와 scope
-    7. global 키워
 
 ctrl + d : 같은 단어 일괄 수정
 alt + shift: 복사
