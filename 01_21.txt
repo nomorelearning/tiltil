@@ -38,7 +38,7 @@
     5. other: None(값이 없음을 표형하는 자료형), Boolean(참 거짓 표현, 조건문 배울 때 등장할 예정)
     6. collection: 여러 개의 항목 또는 요소를 담는자료구조(str, list, tuple, dict, set)
     7. 복사
-        - 복사 유형: 할당(=), 얕은 복사(슬라이싱; 함께 변경됨), 깊은 복사(import copy; copy.deepcopy(list))
+        - 복사 유형: 할당(=), 얕은 복사(슬라이싱[:]; 함께 변경됨), 깊은 복사(import copy; copy.deepcopy(list) or copy(list))
     8. type conversion
         * 암시적 형변환: True = 1, False =0; Boolean과 Numeric 간 연산이 가능
         * 명시적 형변환: 가능한 경우 불가능한 경우 구분분
