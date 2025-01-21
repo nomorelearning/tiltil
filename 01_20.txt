@@ -47,9 +47,9 @@
         - 유한 정밀도: 모든 소수는 근삿값으로 치환(용량이 제한되어 있기 때문)
         - 실수 연산시 주의사항: 컴퓨터는 2진 사람은 10진 -> float point rounding error(부동소수점 에러) -> 해결핵: 'decimal' 모듈 사용해 정확성 보장
 
-5. Sequence Types: 여러 개의 값들을 순서대로 나열하여 저장하는 자료형; str, list, tuple, range
+5. Sequence Types: 여러 개의 값들을 순서대로 나열하여 저장하는 자료형(정렬은X); str, list, tuple, range
     - 순서(Sequence; 값들이 순서대로 저장), 인덱싱(Indexing; 각 값에 고유한 인덱스 있음, 특정 위치 값 선택하거나 수정 가능), 슬라이싱(인덱스 범위를 조절해 부분적 값 추출 가능), 길이(len()함수), 반복
-    1. str: 문자열; 문자들의 순서가 있는/변경 불가능한(not support item assignment)/시퀀스 자료형
+    1. str: 문자열; 문자들의 순서가 있는/'변경 불가능'한(not support item assignment)/시퀀스 자료형
         - 중첩 따옴표, Escape Sequence(\n, \t, \\, \', \")
         - String Interpolation: 문자열 내에 변수나 표현식을 삽입하는 방법
             * *f-String: 문자열에 f또는 F 접두어 붙이고 표현식을 {expression}로 작성하는 문법*[중요]
