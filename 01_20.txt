@@ -2,7 +2,7 @@
 [1. 프로그래밍
  2. 파이썬
  3. Data Types
- 4.Numeric Types
+ 4. Numeric Types
  5. Sequence Types
  6. 참고]
 
