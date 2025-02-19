@@ -50,3 +50,25 @@ t = q.popleft()
 print(t)
 t = q.popleft()
 print(q)
+
+######################
+QSIZE = 4
+Q = [0] * QSIZE
+front = rear = -1       # 선형큐의 초기값, head tail도 사용
+
+def enqueue(item):
+    if rear == QSIZE -1:
+        print("over")
+        return
+    global rear
+    rear += 1
+    Q[rear] = item
+
+def dequeue():
+    global front
+    if front == rear:
+        print("under")
+        return
+    front += 1
+    return Q[front]
+
