@@ -1,74 +1,76 @@
-# queue = [0] * 3
-# front = rear = -1       # 다른 방식도 있지만, 우리는 꺼내거나 삽입할 때마다 위치 변경할거라
+# class_01 = [
+#     '권예경',
+#     '김강산',
+#     '김봉주',
+#     '김서영',
+#     '김준혁',
+#     '김효준',
+#     '문빈',
+#     '박수아',
+#     '박수정',
+#     '신재은',
+#     '안다빈',
+#     '연제현',
+#     '유경민',
+#     '윤주현',
+#     '이윤동',
+#     '이효은',
+#     '임태원',
+#     '최수빈',
+#     '최이설',
+#     '하다예',
+#     '현지우',
+#     '황희준'
+# ]
+#
+# import
 
-# # 1, 2, 3 인큐
-# rear += 1
-# queue[rear] = 1
 
-# rear += 1
-# queue[rear] = 2
+# from collections import deque
+#
+# def BFS(G,v,n):
+#     visited = [0]*(n+1)
+#     queue = []
+#     queue.append(v)
+#     visited[v] = 1
+#     while queue:
+#         t = queue.pop(0)
+#         visited(t)
+import sys
+sys.stdin = open('in.txt')
+di = [0,1,0,-1]
+dj = [1,0,-1,0]
 
-# rear += 1
-# queue[rear] = 3
+def bfs(i,j,N):
+    visited = [[0]*N for _ in range(N)]
+    q = []
+    q.append((i,j))
+    visited[i][j] = 1
+    while q:
+        ti, tj = q.pop(0)
+        if maze[ti][tj] == '3':
+            return visited[ti][tj] - 2
+        for d in range(4):
+            wi, wj = ti+di[d], tj+dj[d]
+            if 0<=wi<N and 0<=wj<N and maze[wi][wj] != '1' and visited[wi][wj] == 0:
+                q.append((wi,wj))
+                visited[wi][wj] = visited[ti][tj] + 1
+    else:
+        return 0
 
-# # 디큐 세 번
-# while front != rear:
-#     front += 1
-#     t = queue[front]
-#     print(t)
-    
-# print(queue)
 
-# # front += 1
-# # print(queue[front])
 
-# # front += 1
-# # print(queue[front])
+def find_start(N):
+    for i in range(N):
+        for j in range(N):
+            if maze[i][j] == '2':
+                return i, j
 
-# # front += 1
-# # print(queue[front])
+T = int(input())
+for tc in range(1,T+1):
+    N = int(input())
+    maze = [list(input()) for _ in range(N)]
 
-# q = []
-# q.append(1)     # enqueue에 해당
-# print(q)
-# q.append(2)
-# print(q)
-# q.append(3)
-# print(q)
-# print(q.pop(0)) # dequeue에 해당
-# print(q.pop(0))
-# print(q.pop(0))
-
-############################
-
-from collections import deque
-
-q = deque()
-q.append(1)
-q.append(2)
-t = q.popleft()
-print(t)
-t = q.popleft()
-print(q)
-
-######################
-QSIZE = 4
-Q = [0] * QSIZE
-front = rear = -1       # 선형큐의 초기값, head tail도 사용
-
-def enqueue(item):
-    if rear == QSIZE -1:
-        print("over")
-        return
-    global rear
-    rear += 1
-    Q[rear] = item
-
-def dequeue():
-    global front
-    if front == rear:
-        print("under")
-        return
-    front += 1
-    return Q[front]
-
+    si, sj = find_start(N)
+    ans = bfs(si,sj,N)
+    print(f'#{tc} {ans}')
