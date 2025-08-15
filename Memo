@@ -1,0 +1,171 @@
+채팅 구조를 바꾸기 위해 확인해야 할 핵심 파일들을 안내드리겠습니다! [[memory:5422055]]에 따라 파일 위치와 코드 설명을 제공하겠습니다.
+
+## 📡 채팅 구조 핵심 파일들
+
+### **1. 프론트엔드 - 채팅 전송/수신 로직**
+Ran tool
+Ran tool
+Ran tool
+Ran tool
+Ran tool
+Ran tool
+## 🔧 채팅 구조 변경 핵심 포인트
+
+### **1. 📤 메시지 전송 구조 (ChatContext.tsx)**
+
+**위치**: `front/src/stores/ChatContext.tsx` 라인 191-201
+
+```typescript
+// 현재 전송 payload 구조
+const payload = {
+  roomCode: roomCode,
+  userId: userIdRef.current ? Number(userIdRef.current) : null,
+  username: localStorage.getItem('userNickname') || undefined,
+  content: message,
+};
+
+// 전송 목적지
+client.publish({
+  destination: `/ws/chat.${roomCode}`,  // 🎯 백엔드 엔드포인트
+  body: JSON.stringify(payload),
+});
+```
+
+### **2. 📥 메시지 수신 구조 (ChatContext.tsx)**
+
+**위치**: `front/src/stores/ChatContext.tsx` 라인 150-168
+
+```typescript
+// 수신 처리
+client.subscribe(destination, (msg: IMessage) => {
+  const data = JSON.parse(msg.body) as ChatMessage;  // 🎯 수신 데이터 파싱
+  // ... 중복 방지 로직
+  setMessages((prev) => [...prev, data]);
+});
+```
+
+### **3. 📋 메시지 타입 정의**
+
+**위치**: `front/src/types/index.ts` 라인 221-230
+
+```typescript
+export interface ChatMessage {
+  id: string;
+  roomCode: string;
+  userId: number;
+  username?: string;
+  content: string;
+  createdAt: string;     // ISO
+  type?: 'user' | 'bot';
+  timestamp?: string;
+}
+```
+
+## 🔄 구조 변경 시 수정할 파일들
+
+### **프론트엔드 수정 파일**
+
+1. **`front/src/types/index.ts`** 
+   - `ChatMessage` 인터페이스 수정
+   - 새로운 필드 추가/제거
+
+2. **`front/src/stores/ChatContext.tsx`**
+   - 전송 payload 구조 변경 (라인 191-196)
+   - 수신 데이터 파싱 로직 변경 (라인 152)
+
+3. **`front/src/components/chat/ChatSection.tsx`**
+   - 메시지 렌더링 로직 수정
+   - UI 표시 방식 변경
+
+### **백엔드 확인 포인트**
+
+```java
+// 예상 백엔드 구조
+@MessageMapping("/chat.{roomCode}")  // 🎯 수신 엔드포인트
+public void handleMessage(@DestinationVariable String roomCode, ChatMessageDto message) {
+    // 처리 로직
+}
+
+@SendTo("/topic/chat.{roomCode}")    // 🎯 브로드캐스트 목적지
+public ChatMessageDto broadcastMessage(ChatMessageDto message) {
+    return message;
+}
+```
+
+## 🛠️ 구체적인 수정 예시
+
+### **새로운 필드 추가 시 (예: 메시지 타입)**
+
+1. **타입 정의 수정**:
+```typescript
+// front/src/types/index.ts
+export interface ChatMessage {
+  id: string;
+  roomCode: string;
+  userId: number;
+  username?: string;
+  content: string;
+  createdAt: string;
+  type?: 'user' | 'bot' | 'system';  // 🆕 새 타입 추가
+  messageType?: 'text' | 'image' | 'recommendation';  // 🆕 메시지 종류
+  timestamp?: string;
+}
+```
+
+2. **전송 payload 수정**:
+```typescript
+// front/src/stores/ChatContext.tsx
+const payload = {
+  roomCode: roomCode,
+  userId: userIdRef.current ? Number(userIdRef.current) : null,
+  username: localStorage.getItem('userNickname') || undefined,
+  content: message,
+  messageType: 'text',  // 🆕 새 필드 추가
+};
+```
+
+이렇게 하면 채팅 구조를 체계적으로 변경할 수 있습니다! 🚀
+
+----------------------------------------------------
+
+채팅의 요청 바디에는
+userId: Long, 
+content: String
+isAi: Boolean
+이렇게 있어야 함
+
+isAi는 봇 버튼 누르면 해당 값이 true가 되는 거임.
+그리고 누군가가 버튼 누르면 방 안의 다른 사람들은 버튼 비활성화 됨
+그리고 전송하면 봇버튼 안누른 상태가 되고 봇의 채팅 반환과 추천 패널 리스트업이 됨
+
+{
+  id: 1,
+  userId: 3,
+  username: "guest asdjfhejhwufhwelfhwhefkhkwefhj",
+  roomCode: "7d58fw",
+  content: "제가 추천한 식당은 다음과 같습니다. 왼쪽 사이드바와 지도에서 식당을 확인해보세요.",
+  createdAt: "2025-08-14 13:25:15",
+	places: [
+		{ 
+			"placeId": 311754447, 
+			"placeName": "프로티너 역삼역점", 
+			"kakaoUrl": "http://place.map.kakao.com/311754447", 
+			"x": "127.03623962192782", 
+			"y": "37.50011045955869",
+			"address": "서울 강남구 역삼동 737",
+			"roadAddress": "서울 강남구 테헤란로 152",
+			"phone": "070-4114-7958",
+			"categoryDetail": "일식/돈까스",
+			"menu": ["치즈 돈까스", "일식 돈카츠", "생선까스", "함박까스"],
+			"mood": ["아늑한", "깔끔한", "편안한"],
+			"feature": ["치즈가 흘러넘치는 바삭한 돈까스", "4p 돈까스 메뉴", "프라이빗룸", "유아용 의자"],
+			"purpose": ["가족 외식", "단체 회식", "모임"]
+		}
+		{},
+		...
+	]
+}
+
+응답은 위처럼 채팅 구조와 같은 답변이 옴(보통 사용자들과 같지만 places 키값이 있을 수도 있고 없을 수도 있음.(백엔드 장소 답변과 똑같은 요소들이 리스트로 묶여서 옴)
+1. 만약 places 값을 준다면 recommendPanel을 자동으로 열리게 하고 해당하는 리스트를 카드 컴포넌트에 담아서 반환해야 함.
+2. places가 있거나 없거나 content는 반환이 될텐데, 그건 다른 사용자들처럼 채팅 말풍선으로 반환되어야 함
